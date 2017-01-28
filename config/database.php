@@ -51,6 +51,7 @@ return [
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+            'port' => env('DB_PORT', 'localhost'),
         ],
 
         'pgsql' => [
