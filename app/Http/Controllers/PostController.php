@@ -14,7 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::orderBy('id', 'desc')->paginate(5);
+
+        return view('posts.index')->with('posts', $posts);
     }
 
     /**
@@ -56,7 +58,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return view('posts.show');
+        $post = Post::find($id);
+
+        return view('posts.show')->with('post', $post);
     }
 
     /**
@@ -67,7 +71,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+
+        return view('posts.edit')->with('post', $post);
     }
 
     /**
@@ -79,7 +85,17 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $this->validate($request, [
+        "title" => 'required|max:100',
+        "body" => 'required',
+      ]);
+
+      $post = Post::find($id);
+      $post->title = $request->input('title');
+      $post->body = $request->input('body');
+      $post->save();
+
+      return redirect()->route('posts.show', $post->id)->with('info', 'Je bericht is bijgewerkt!');
     }
 
     /**
@@ -90,6 +106,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+
+        return redirect()->route('posts.index', $post->id)->with('info', 'Je bericht is verwijdert!');
     }
 }

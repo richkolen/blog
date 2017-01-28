@@ -11,7 +11,7 @@
 
       <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
         <label for="title" class="control-label" id="title">Titel</label>
-        <input type="text" name="title" class="form-control" id="title" value="">
+        <input type="text" name="title" class="form-control input-lg" id="title" value="">
         @if ($errors->has('title'))
 					<span class="help-block">{{ $errors->first('title') }}</span>
 				@endif
